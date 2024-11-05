@@ -36,29 +36,50 @@ func Reverse(fileName string) {
 		c = append(c, o)
 	}
 	j := ""
+	space := []string{" ", " ", " ", " ", " ", " ", " ", " "}
+	cc := 0
 	for r, v := range c {
 		for i := 0; i < len(v); i += 8 {
-
 			t := v[i : i+8]
-			io, oi := contains(standard, t)
-			if io {
-				j += string(rune((oi / 9) + 32))
-			}
-			io, oi = contains(shaadow, t)
-			if io {
-				j += string(rune((oi / 9) + 32))
-			}
-			io, oi = contains(thinkertoy, t)
-			if io {
-				j += string(rune((oi / 9) + 32))
+			if compare(t, space) {
+				cc++
+				if cc == 6 {
+					j += " "
+					cc = 0
+				}
+			} else {
+				io, oi := contains(standard, t)
+				if io {
+					j += string(rune((oi / 9) + 32))
+				}
+				io, oi = contains(shaadow, t)
+				if io {
+					j += string(rune((oi / 9) + 32))
+				}
+				io, oi = contains(thinkertoy, t)
+				if io {
+					j += string(rune((oi / 9) + 32))
+				}
 			}
 		}
-		if r!=len(c)-1 {
+		if r != len(c)-1 {
 			j += "\\n"
 		}
-		
+
 	}
 	fmt.Println(j)
+}
+
+func compare(v, x []string) bool {
+	if len(v) != len(x) {
+		return false
+	}
+	for i := 0; i < len(x); i++ {
+		if v[i] != x[i] {
+			return false
+		}
+	}
+	return true
 }
 
 func split(v []string) []string {
